@@ -9,13 +9,13 @@ import {
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import {Cron} from "@nestjs/schedule";
-import {UserService} from "./modules/user/user.service";
+import {StudentService} from "./modules/student/student.service";
 import {HttpExceptionFilter} from "./common/filters/http-exception.filter";
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService,
-              private readonly userService: UserService
+              private readonly userService: StudentService
               ) {}
 
   private readonly logger = new Logger(AppController.name);

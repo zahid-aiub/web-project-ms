@@ -3,7 +3,7 @@ import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {AuthModule} from './modules/auth/auth.module';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import {UserModule} from "./modules/user/user.module";
+import {StudentModule} from "./modules/student/student.module";
 import {ScheduleModule} from "@nestjs/schedule";
 import {APP_FILTER, APP_INTERCEPTOR} from "@nestjs/core";
 import {HttpExceptionFilter} from "./common/filters/http-exception.filter";
@@ -35,7 +35,7 @@ import {HttpExceptionFilter} from "./common/filters/http-exception.filter";
     }),
 
     AuthModule,
-    UserModule
+    StudentModule
   ],
   controllers: [AppController],
   providers: [

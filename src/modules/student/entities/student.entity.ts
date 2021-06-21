@@ -2,7 +2,7 @@ import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 import {Role} from "../../../core/enums/role.enum";
 
 @Entity()
-export class User {
+export class Student {
     @PrimaryGeneratedColumn()
     userId: number;
 
