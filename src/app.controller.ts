@@ -9,13 +9,13 @@ import {
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import {Cron} from "@nestjs/schedule";
-import {StudentService} from "./modules/student/student.service";
+import {UserService} from "./modules/user/user.service";
 import {HttpExceptionFilter} from "./common/filters/http-exception.filter";
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService,
-              private readonly userService: StudentService
+              private readonly userService: UserService
               ) {}
 
   private readonly logger = new Logger(AppController.name);
@@ -30,11 +30,11 @@ export class AppController {
     this.logger.debug('========== Called when the current second is 45 ===========');
   }
 
-  @Get('cache')
+  /*@Get('cache')
   @UseFilters(HttpExceptionFilter)
   @UseInterceptors(CacheInterceptor)
   getUserInfo() {
     return this.userService.findAll();
-  }
+  }*/
 
 }

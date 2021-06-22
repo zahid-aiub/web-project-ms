@@ -1,24 +1,29 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
-import {Role} from "../../../core/enums/role.enum";
+import {Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {User} from "../../user/entities/user.entity";
 
 @Entity()
 export class Student {
+
     @PrimaryGeneratedColumn()
-    userId: number;
+    id: number;
 
     @Column()
-    username: string;
+    email: string;
 
     @Column()
-    password: string;
+    firstName: string;
 
-    @Column({default: true})
-    isActive: boolean;
+    @Column()
+    lastName: string;
 
-    @Column({
-        type: "enum",
-        enum: Role,
-        default: [Role.User]
-    })
-    roles: Role[];
+    @OneToOne(() => User, user => user.student)
+    // @JoinColumn()
+    user: User;
+
+    @CreateDateColumn({type: 'timestamp'})
+    createdAt: Date;
+
+    @UpdateDateColumn({type: 'timestamp'})
+    updatedAt: Date;
+
 }

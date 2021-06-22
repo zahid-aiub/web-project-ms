@@ -3,7 +3,7 @@ import {AuthService} from "./auth.service";
 import {LocalAuthGuard} from "../../common/guards/local-auth.guard";
 import {JwtAuthGuard} from "../../common/guards/jwt-auth.guard";
 import {RolesGuard} from "../../common/guards/roles.guard";
-import {Role} from "../../core/enums/role.enum";
+import {ERole} from "../../core/enums/role.enum";
 import {Roles} from "../../common/decorators/roles.decorator";
 
 
@@ -27,7 +27,7 @@ export class AuthController {
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(Role.Admin)
+    @Roles(ERole.Admin)
     @Get('admin')
     getAdmin(@Request() req) {
         return req.user;

@@ -1,6 +1,6 @@
 import {Module} from '@nestjs/common';
 import {JwtModule} from '@nestjs/jwt';
-import {StudentModule} from "../student/student.module";
+import {UserModule} from "../user/user.module";
 import {PassportModule} from "@nestjs/passport";
 import {jwtConstants} from "../../common/utils/constrains";
 import {LocalStrategy} from "../../common/strategies/local.strategy";
@@ -14,7 +14,7 @@ import {AuthController} from "./auth.controller";
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '3600s' },
     }),
-    StudentModule,
+    UserModule,
     PassportModule,
   ],
   controllers: [AuthController],

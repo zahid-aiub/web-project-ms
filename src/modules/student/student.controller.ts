@@ -1,38 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards } from '@nestjs/common';
-import { StudentService } from './student.service';
-import {CreateStudentDto} from "./dto/create-user.dto";
-import {UpdateStudentDto} from "./dto/update-user.dto";
+import {Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe} from '@nestjs/common';
+import {StudentService} from './student.service';
+import {CreateStudentDto} from './dto/create-student.dto';
+import {UpdateStudentDto} from './dto/update-student.dto';
+import {Pagination} from "nestjs-typeorm-paginate";
+import {User} from "../user/entities/user.entity";
+import {Student} from "./entities/student.entity";
+import {ApiPaginateResponse} from "../../common/responses/api.paginate.response";
 
 @Controller('student')
 export class StudentController {
-  constructor(private readonly userService: StudentService) {}
+    constructor(private readonly studentService: StudentService) {
+    }
 
-  @Post()
-  create(@Body() createStudentDto: CreateStudentDto) {
-    return this.userService.create(createStudentDto);
-  }
+    @Post('add')
+    async create(@Body() createStudentDto: CreateStudentDto) {
+        return this.studentService.create(createStudentDto);
+    }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
+    @Get('all')
+    async findAll(
+        @Query('page', ParseIntPipe) page: number = 1,
+        @Query('limit', ParseIntPipe) limit: number = 10,
+        @Query('search') search: string = ""
+    ): Promise<Pagination<Student>> {
+        limit = limit > 100 ? 100 : limit;
+        let condition = {search};
+        const response = await this.studentService.findAll({page, limit}, condition);
+        return ApiPaginateResponse(200, 'Student List', response);
+    }
 
-  @Get(':id')
-  findById(@Param('id') id: string) {
-    return this.userService.findById(+id);
-  }
-  @Get(':username')
-  findOne(@Param('username') username: string) {
-    return this.userService.findOne(username);
-  }
+    @Get(':id')
+    findOne(@Param('id') id: string) {
+        return this.studentService.findOne(+id);
+    }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
-    return this.userService.update(+id, updateStudentDto);
-  }
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
+        return this.studentService.update(+id, updateStudentDto);
+    }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
-  }
+    @Delete(':id')
+    remove(@Param('id') id: string) {
+        return this.studentService.remove(+id);
+    }
 }
