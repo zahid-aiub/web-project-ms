@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe} from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, UseGuards} from '@nestjs/common';
 import {StudentService} from './student.service';
 import {CreateStudentDto} from './dto/create-student.dto';
 import {UpdateStudentDto} from './dto/update-student.dto';
@@ -6,6 +6,7 @@ import {Pagination} from "nestjs-typeorm-paginate";
 import {User} from "../user/entities/user.entity";
 import {Student} from "./entities/student.entity";
 import {ApiPaginateResponse} from "../../common/responses/api.paginate.response";
+import {JwtAuthGuard} from "../../common/guards/jwt-auth.guard";
 
 @Controller('student')
 export class StudentController {
@@ -18,6 +19,7 @@ export class StudentController {
     }
 
     @Get('all')
+    // @UseGuards(JwtAuthGuard)
     async findAll(
         @Query('page', ParseIntPipe) page: number = 1,
         @Query('limit', ParseIntPipe) limit: number = 10,

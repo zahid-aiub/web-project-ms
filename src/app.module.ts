@@ -10,6 +10,8 @@ import {HttpExceptionFilter} from "./common/filters/http-exception.filter";
 import { StudentModule } from './modules/student/student.module';
 import { TeacherModule } from './modules/teacher/teacher.module';
 import { AdminModule } from './modules/admin/admin.module';
+import { SubjectModule } from './modules/subject/subject.module';
+import { TestModule } from './modules/test/test.module';
 
 @Module({
   imports: [
@@ -41,7 +43,9 @@ import { AdminModule } from './modules/admin/admin.module';
     UserModule,
     StudentModule,
     TeacherModule,
-    AdminModule
+    AdminModule,
+    SubjectModule,
+    TestModule
   ],
   controllers: [AppController],
   providers: [

@@ -25,10 +25,10 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Cron('45 * * * * *')
+  /*@Cron('45 * * * * *')
   handleCron() {
     this.logger.debug('========== Called when the current second is 45 ===========');
-  }
+  }*/
 
   /*@Get('cache')
   @UseFilters(HttpExceptionFilter)

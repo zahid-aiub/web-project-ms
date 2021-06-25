@@ -1,5 +1,15 @@
-import {Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity, JoinColumn, JoinTable,
+    ManyToMany,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
 import {User} from "../../user/entities/user.entity";
+import {Subject} from "../../subject/entities/subject.entity";
 
 @Entity()
 export class Student {
@@ -19,6 +29,10 @@ export class Student {
     @OneToOne(() => User, user => user.student)
     // @JoinColumn()
     user: User;
+
+    @ManyToMany(() => Subject, subject => subject.students)
+    @JoinTable()  // this is used for reverse way data retrieval
+    subjects: Subject[];
 
     @CreateDateColumn({type: 'timestamp'})
     createdAt: Date;
