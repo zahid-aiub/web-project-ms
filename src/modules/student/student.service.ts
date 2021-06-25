@@ -9,7 +9,9 @@ import {UserRepository} from "../user/user.repository";
 import {Student} from "./entities/student.entity";
 import {ERole} from "../../core/enums/role.enum";
 import {Like} from "typeorm";
+import * as bcrypt from 'bcrypt';
 import {IPaginationOptions, paginate, Pagination} from "nestjs-typeorm-paginate";
+import {SALT_OR_ROUND} from "../../common/utils/message.utils";
 
 @Injectable()
 export class StudentService {
@@ -29,11 +31,13 @@ export class StudentService {
         const savesStudent = await this.studentRepository.save(student);
 
         const user = new User();
+        const password = createStudentDto.password;
+        const hash = await bcrypt.hash(password, SALT_OR_ROUND);
         user.username = createStudentDto.username;
-        user.password = createStudentDto.password;
+        user.password = hash;
         user.student = savesStudent;
         user.roles = ERole.Student;
-        const savedUser = await this.userRepository.save(user);
+        await this.userRepository.save(user);
 
         return new ApiResponse(201, 'Student Created Successfully', user.userId);
     }
