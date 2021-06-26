@@ -7,12 +7,12 @@ import { UpdateSubjectDto } from './dto/update-subject.dto';
 export class SubjectController {
   constructor(private readonly subjectService: SubjectService) {}
 
-  @Post()
+  @Post('add')
   create(@Body() createSubjectDto: CreateSubjectDto) {
     return this.subjectService.create(createSubjectDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.subjectService.findAll();
   }

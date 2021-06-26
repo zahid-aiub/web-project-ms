@@ -10,6 +10,7 @@ import {
 } from "typeorm";
 import {User} from "../../user/entities/user.entity";
 import {Subject} from "../../subject/entities/subject.entity";
+import {Test} from "../../test/entities/test.entity";
 
 @Entity()
 export class Student {
@@ -33,6 +34,10 @@ export class Student {
     @ManyToMany(() => Subject, subject => subject.students)
     @JoinTable()  // this is used for reverse way data retrieval
     subjects: Subject[];
+
+    @ManyToMany(() => Test, test => test.students)
+    @JoinTable()
+    tests: Test[];
 
     @CreateDateColumn({type: 'timestamp'})
     createdAt: Date;

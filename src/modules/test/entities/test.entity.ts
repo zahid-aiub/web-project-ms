@@ -1,5 +1,14 @@
-import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToMany,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
 import {Subject} from "../../subject/entities/subject.entity";
+import {Student} from "../../student/entities/student.entity";
 
 @Entity()
 export class Test {
@@ -19,9 +28,12 @@ export class Test {
     @Column({default: true})
     isActive: boolean;
 
-    @ManyToOne(() => Subject, subject => subject.tests, {cascade: true})
+    @ManyToOne(() => Subject, subject => subject.tests, {cascade: false})
         // @JoinColumn()  // this is used for reverse way data retrieval
     subject: Subject;
+
+    @ManyToMany(() => Student, student => student.tests, {cascade: true})
+    students: Student[];
 
     @Column()
     createdById: number;

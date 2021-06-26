@@ -26,7 +26,7 @@ export class Subject {
     tests: Test[];
 
     @ManyToMany(() => Student, student => student.subjects, {cascade: true})
-    students: Student;
+    students: Student[];
 
     @Column()
     createdById: number;

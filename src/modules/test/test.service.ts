@@ -1,26 +1,39 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTestDto } from './dto/create-test.dto';
-import { UpdateTestDto } from './dto/update-test.dto';
+import {Injectable} from '@nestjs/common';
+import {CreateTestDto} from './dto/create-test.dto';
+import {UpdateTestDto} from './dto/update-test.dto';
+import {InjectRepository} from "@nestjs/typeorm";
+import {StudentRepository} from "../student/student.repository";
+import {UserRepository} from "../user/user.repository";
+import {TestRepository} from "./test.repository";
+import {ApiResponse} from "../../common/responses/api.response";
 
 @Injectable()
 export class TestService {
-  create(createTestDto: CreateTestDto) {
-    return 'This action adds a new test';
-  }
 
-  findAll() {
-    return `This action returns all test`;
-  }
+    constructor(
+        @InjectRepository(TestRepository)
+        private readonly testRepository: TestRepository
+    ) {
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} test`;
-  }
+    async create(createTestDto: CreateTestDto): Promise<ApiResponse> {
+        const test = await this.testRepository.save(createTestDto);
+        return new ApiResponse(201, 'Test Created Successfully', test.id);
+    }
 
-  update(id: number, updateTestDto: UpdateTestDto) {
-    return `This action updates a #${id} test`;
-  }
+    async findAll() {
+        return this.testRepository.find({relations: ['subject']});
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} test`;
-  }
+    findOne(id: number) {
+        return `This action returns a #${id} test`;
+    }
+
+    update(id: number, updateTestDto: UpdateTestDto) {
+        return `This action updates a #${id} test`;
+    }
+
+    remove(id: number) {
+        return `This action removes a #${id} test`;
+    }
 }
