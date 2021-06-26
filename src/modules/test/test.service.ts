@@ -22,7 +22,7 @@ export class TestService {
     }
 
     async findAll() {
-        return this.testRepository.find({relations: ['subject']});
+        return this.testRepository.find(/*{relations: ['subject']}*/);
     }
 
     findOne(id: number) {

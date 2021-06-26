@@ -1,15 +1,9 @@
 import {ApiProperty} from "@nestjs/swagger";
 import {Subject} from "../../subject/entities/subject.entity";
 
-
-export class CreateTestDto {
-    @ApiProperty()
-    name: string;
+export class AssignSubjectDto {
 
     @ApiProperty()
-    testDate: string;
-
-    @ApiProperty()
-    subject: Subject;
+    subjects: Subject[];
 
 }

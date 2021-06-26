@@ -7,6 +7,8 @@ import {User} from "../user/entities/user.entity";
 import {Student} from "./entities/student.entity";
 import {ApiPaginateResponse} from "../../common/responses/api.paginate.response";
 import {JwtAuthGuard} from "../../common/guards/jwt-auth.guard";
+import {AssignSubjectDto} from "./dto/assign-subject.dto";
+import {AssignTestDto} from "./dto/assign-test.dto";
 
 @Controller('student')
 export class StudentController {
@@ -29,6 +31,16 @@ export class StudentController {
         let condition = {search};
         const response = await this.studentService.findAll({page, limit}, condition);
         return ApiPaginateResponse(200, 'Student List', response);
+    }
+
+    @Post('assign-subject/:id')
+    async assignSubject(@Param('id') id: string, @Body() assignSubjectDto: AssignSubjectDto): Promise<any> {
+        return this.studentService.assignSubject(id, assignSubjectDto);
+    }
+
+    @Post('assign-test/:id')
+    async assignTest(@Param('id') id: string, @Body() assignTestDto: AssignTestDto): Promise<any> {
+        return this.studentService.assignTest(id, assignTestDto);
     }
 
     @Get(':id')

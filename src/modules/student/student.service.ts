@@ -12,6 +12,8 @@ import {Like} from "typeorm";
 import * as bcrypt from 'bcrypt';
 import {IPaginationOptions, paginate, Pagination} from "nestjs-typeorm-paginate";
 import {SALT_OR_ROUND} from "../../common/utils/message.utils";
+import {AssignSubjectDto} from "./dto/assign-subject.dto";
+import {AssignTestDto} from "./dto/assign-test.dto";
 
 @Injectable()
 export class StudentService {
@@ -28,6 +30,7 @@ export class StudentService {
         student.firstName = createStudentDto.firstName;
         student.lastName = createStudentDto.lastName;
         student.email = createStudentDto.email;
+        // student.tests = createStudentDto.tests;
         const savesStudent = await this.studentRepository.save(student);
 
         const user = new User();
@@ -49,13 +52,28 @@ export class StudentService {
             _where['firstName'] = Like('%' + condition['search'] + '%');
         }
         return paginate<Student>(this.studentRepository, options, {
-            // relations: ['user'],
+            relations: ['subjects', 'tests'],
             where: _where,
 
             order: {
                 createdAt: "DESC"
             },
         });
+    }
+
+
+    async assignSubject(id: string, assignSubjectDto: AssignSubjectDto): Promise<ApiResponse> {
+        const student = await this.studentRepository.findOne(id);
+        student.subjects = assignSubjectDto.subjects;
+        await this.studentRepository.save(student);
+        return new ApiResponse(201, 'Subject Assigned successfully', student.id);
+    }
+
+    async assignTest(id: string, assignTestDto: AssignTestDto): Promise<ApiResponse> {
+        const student = await this.studentRepository.findOne(id);
+        student.tests = assignTestDto.tests;
+        await this.studentRepository.save(student);
+        return new ApiResponse(201, 'Test Assigned successfully', student.id);
     }
 
     findOne(id: number) {

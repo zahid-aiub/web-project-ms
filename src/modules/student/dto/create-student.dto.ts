@@ -16,4 +16,7 @@ export class CreateStudentDto {
 
     @ApiPropertyOptional()
     lastName: string;
+
+    // @ApiPropertyOptional()
+    // tests: Test[];
 }
