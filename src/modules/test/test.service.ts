@@ -29,8 +29,16 @@ export class TestService {
         return `This action returns a #${id} test`;
     }
 
-    update(id: number, updateTestDto: UpdateTestDto) {
-        return `This action updates a #${id} test`;
+    async update(id: number, updateTestDto: UpdateTestDto): Promise<ApiResponse> {
+        const test = await this.testRepository.findOne(id);
+        if (test) {
+            test.name = updateTestDto.name;
+            test.testDate = updateTestDto.testDate;
+            await this.testRepository.save(test);
+            return new ApiResponse(201, 'Test Updated Successfully', id);
+        } else {
+            return new ApiResponse(404, 'Test Not Found with ID: ' + id, id);
+        }
     }
 
     remove(id: number) {

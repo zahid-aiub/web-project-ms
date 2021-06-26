@@ -19,8 +19,14 @@ export class Subject {
     @Column()
     name: string;
 
+    @Column()
+    averageTestGrade: string;
+
     @Column({default: true})
     isActive: boolean;
+
+    @Column({default: false})
+    isArchive: boolean;
 
     @OneToMany(() => Test, test => test.subject)
     tests: Test[];

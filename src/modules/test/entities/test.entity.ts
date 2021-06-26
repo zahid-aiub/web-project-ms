@@ -28,6 +28,9 @@ export class Test {
     @Column({default: true})
     isActive: boolean;
 
+    @Column({default: false})
+    isArchive: boolean;
+
     @ManyToOne(() => Subject, subject => subject.tests, {cascade: false})
         // @JoinColumn()  // this is used for reverse way data retrieval
     subject: Subject;

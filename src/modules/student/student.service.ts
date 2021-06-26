@@ -76,8 +76,9 @@ export class StudentService {
         return new ApiResponse(201, 'Test Assigned successfully', student.id);
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} student`;
+    async findOne(id: number): Promise<ApiResponse> {
+        const student = await this.studentRepository.findOne(id, {relations: ['subjects', 'tests']});
+        return new ApiResponse(200, 'Student with ID: ' + id, student);
     }
 
     update(id: number, updateStudentDto: UpdateStudentDto) {

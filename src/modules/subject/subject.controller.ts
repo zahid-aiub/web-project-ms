@@ -22,7 +22,7 @@ export class SubjectController {
 
 
     @Get(':id')
-    findOne(@Param('id') id: string) {
+    async findOne(@Param('id') id: string) {
         return this.subjectService.findOne(+id);
     }
 

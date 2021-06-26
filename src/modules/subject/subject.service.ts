@@ -3,10 +3,7 @@ import {CreateSubjectDto} from './dto/create-subject.dto';
 import {UpdateSubjectDto} from './dto/update-subject.dto';
 import {ApiResponse} from "../../common/responses/api.response";
 import {InjectRepository} from "@nestjs/typeorm";
-import {TestRepository} from "../test/test.repository";
 import {SubjectRepository} from "./subject.repository";
-import {AssignSubjectDto} from "../student/dto/assign-subject.dto";
-import {AssignTestDto} from "../student/dto/assign-test.dto";
 
 @Injectable()
 export class SubjectService {
@@ -26,8 +23,9 @@ export class SubjectService {
         return this.subjectRepository.find({relations: ['tests']});
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} subject`;
+    async findOne(id: number): Promise<ApiResponse> {
+        const subject = await this.subjectRepository.findOne(id, {relations: ['tests']});
+        return new ApiResponse(200, 'Subject with ID: ' + id, subject);
     }
 
     update(id: number, updateSubjectDto: UpdateSubjectDto) {

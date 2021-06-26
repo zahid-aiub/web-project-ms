@@ -1,4 +1,4 @@
-import {ApiProperty} from "@nestjs/swagger";
+import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
 import {Subject} from "../../subject/entities/subject.entity";
 
 
@@ -7,9 +7,9 @@ export class CreateTestDto {
     name: string;
 
     @ApiProperty()
-    testDate: string;
+    testDate: Date;
 
-    @ApiProperty()
+    @ApiPropertyOptional()
     subject: Subject;
 
 }
