@@ -31,7 +31,7 @@ export class Test {
     @Column({default: false})
     isArchive: boolean;
 
-    @ManyToOne(() => Subject, subject => subject.tests, {cascade: false})
+    @ManyToOne(() => Subject, subject => subject.tests, {cascade: true})
         // @JoinColumn()  // this is used for reverse way data retrieval
     subject: Subject;
 

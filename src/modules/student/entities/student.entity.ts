@@ -11,6 +11,8 @@ import {
 import {User} from "../../user/entities/user.entity";
 import {Subject} from "../../subject/entities/subject.entity";
 import {Test} from "../../test/entities/test.entity";
+import {Class} from "../../class/entities/class.entity";
+import {clearScreenDown} from "readline";
 
 @Entity()
 export class Student {
@@ -30,6 +32,9 @@ export class Student {
     @OneToOne(() => User, user => user.student)
     // @JoinColumn()
     user: User;
+
+    @OneToOne( () => Class, cls => cls.student)
+    class: Class;
 
     @ManyToMany(() => Subject, subject => subject.students)
     @JoinTable()  // this is used for reverse way data retrieval

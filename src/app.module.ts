@@ -12,6 +12,7 @@ import { TeacherModule } from './modules/teacher/teacher.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { SubjectModule } from './modules/subject/subject.module';
 import { TestModule } from './modules/test/test.module';
+import { ClassModule } from './modules/class/class.module';
 
 @Module({
   imports: [
@@ -45,7 +46,8 @@ import { TestModule } from './modules/test/test.module';
     TeacherModule,
     AdminModule,
     SubjectModule,
-    TestModule
+    TestModule,
+    ClassModule
   ],
   controllers: [AppController],
   providers: [

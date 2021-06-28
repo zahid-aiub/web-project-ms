@@ -9,6 +9,8 @@ import {
 } from "typeorm";
 import {Student} from "../../student/entities/student.entity";
 import {Test} from "../../test/entities/test.entity";
+import {Class} from "../../class/entities/class.entity";
+import {Teacher} from "../../teacher/entities/teacher.entity";
 
 @Entity()
 export class Subject {
@@ -33,6 +35,12 @@ export class Subject {
 
     @ManyToMany(() => Student, student => student.subjects, {cascade: true})
     students: Student[];
+
+    @ManyToOne( () => Class, cls => cls.subjects, {cascade: true})
+    class: Class;
+
+    @ManyToOne( () => Teacher, teacher => teacher.subjects, {cascade: true})
+    teacher: Teacher;
 
     @Column()
     createdById: number;

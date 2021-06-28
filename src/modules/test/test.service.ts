@@ -34,6 +34,7 @@ export class TestService {
         if (test) {
             test.name = updateTestDto.name;
             test.testDate = updateTestDto.testDate;
+            test.grade = updateTestDto.grade;
             await this.testRepository.save(test);
             return new ApiResponse(201, 'Test Updated Successfully', id);
         } else {

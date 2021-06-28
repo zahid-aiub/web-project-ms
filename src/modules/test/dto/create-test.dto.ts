@@ -9,6 +9,9 @@ export class CreateTestDto {
     @ApiProperty()
     testDate: Date;
 
+    @ApiProperty()
+    grade: number;
+
     @ApiPropertyOptional()
     subject: Subject;
 
